@@ -71,6 +71,29 @@
     const copyBtn = document.getElementById('copy');
     const toast = document.getElementById('toast');
 
+    function populateFormFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const s = params.get('s');
+      if (s) {
+        try {
+          const data = JSON.parse(atob(s));
+          if (data.m) document.getElementById('min').value = data.m;
+          if (data.M) document.getElementById('max').value = data.M;
+          if (data.c) document.getElementById('currency').value = data.c;
+          if (data.i) document.getElementById('ilvl').value = data.i;
+          if (data.a) document.getElementById('area').value = data.a;
+          if (data.t) document.getElementById('tier').value = data.t;
+          if (data.x) document.getElementById('additional').value = data.x;
+          genBtn.click(); // auto-generate output
+        } catch(e) { console.error('Failed to parse share data', e); }
+      }
+    }
+
+    function updateUrlWithShareData(data) {
+      const base64 = btoa(JSON.stringify(data));
+      history.replaceState(null, '', `?s=${base64}`);
+    }
+
     genBtn.onclick = () => {
       const min = Math.max(1, Math.min(999, parseInt(document.getElementById('min').value) || 1));
       const max = Math.max(min, Math.min(999, parseInt(document.getElementById('max').value) || 20));
@@ -89,6 +112,13 @@
       if (add) parts.push(add);
 
       document.getElementById('output').value = parts.join(' ');
+
+      const shareData = { m: min, M: max, c: currency };
+      if (!isNaN(ilvl)) shareData.i = ilvl;
+      if (!isNaN(area)) shareData.a = area;
+      if (!isNaN(tier)) shareData.t = tier;
+      if (add) shareData.x = add;
+      updateUrlWithShareData(shareData);
     };
 
     copyBtn.onclick = () => {
@@ -99,6 +129,8 @@
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 1500);
     };
+
+    populateFormFromUrl();
   </script>
 </body>
 </html>
