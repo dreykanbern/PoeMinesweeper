@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PoE Антикраболовка</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦀</text></svg>">
     <style>
         body { background:#1e1e1e; color:#ddd; font-family:sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; }
-        .container { background:#2b2b2b; padding:20px; border-radius:10px; width:360px; display:flex; flex-direction:column; gap:8px; }
+        .container { background:#2b2b2b; padding:20px; border-radius:10px; border: 1px solid #3d3d3d; width: calc(100% - 40px); max-width: 360px; display:flex; flex-direction:column; gap:8px;}
         h1 { margin:0; font-size:20px; text-align:center; }
         h2 { margin:0; font-size:16px; text-align:center; color:#aaa; margin-bottom:10px; }
         h3 { margin:0; font-size:16px; margin-bottom:4px; }
@@ -32,6 +33,12 @@
             transition: opacity 0.3s ease;
         }
         #toast.show { opacity: 1; }
+
+        /* Десктоп: убираем скролл */
+        @media (min-width: 1024px) {
+            html, body { overflow: hidden; }
+            .container { max-height: 95vh; overflow-y: auto; }
+        }
     </style>
 </head>
 <body>
