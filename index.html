@@ -1,136 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PoE Minesweeper</title>
-<style>
-  body { background:#1e1e1e; color:#ddd; font-family:sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; }
-  .container { background:#2b2b2b; padding:20px; border-radius:10px; width:320px; display:flex; flex-direction:column; gap:8px; }
-  h1 { margin:0; font-size:20px; text-align:center; }
-  h2 { margin:0; font-size:12px; text-align:center; color:#aaa; margin-bottom:10px; }
-  h3 { margin:0; font-size:14px; margin-bottom:4px; }
-  .row { display:flex; gap:4px; }
-  .row input, .row select { flex:1; }
-  input, select, button, textarea { background:#3b3b3b; color:#fff; border:none; border-radius:6px; padding:8px; font-size:14px; }
-  button { cursor:pointer; background:#5a5a5a; }
-  textarea { resize:none; }
-  label { display:flex; flex-direction:column; font-size:13px; flex:1; }
-  label.large { font-size:14px; font-weight:bold; }
-  hr { border: 0; border-top: 1px solid #555; margin: 8px 0; }
-  #toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  #toast.show { opacity: 1; }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PoE Антикраболовка</title>
+    <style>
+        body { background:#1e1e1e; color:#ddd; font-family:sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; }
+        .container { background:#2b2b2b; padding:20px; border-radius:10px; width:320px; display:flex; flex-direction:column; gap:8px; }
+        h1 { margin:0; font-size:20px; text-align:center; }
+        h2 { margin:0; font-size:12px; text-align:center; color:#aaa; margin-bottom:10px; }
+        h3 { margin:0; font-size:14px; margin-bottom:4px; }
+        .row { display:flex; gap:4px; }
+        .row input, .row select { flex:1; }
+        input, select, button, textarea { background:#3b3b3b; color:#fff; border:none; border-radius:6px; padding:8px; font-size:14px; }
+        button { cursor:pointer; background:#5a5a5a; }
+        textarea { resize:none; }
+        label { display:flex; flex-direction:column; font-size:13px; flex:1; }
+        label.large { font-size:14px; font-weight:bold; }
+        hr { border: 0; border-top: 1px solid #555; margin: 8px 0; }
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #toast.show { opacity: 1; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>PoE Minesweeper</h1>
-    <h2>Anti-Landmine helper for async trade</h2>
+<div class="container">
+    <h1>PoE Антикраболовка</h1>
+    <h2>Помощник защиты от мошенников для асинхронной торговли</h2>
 
-    <h3>Price</h3>
+    <h3>Цена</h3>
     <div class="row">
-      <label>Min <input type="number" id="min" value="1" min="1" max="999"></label>
-      <label>Max <input type="number" id="max" value="20" min="1" max="999"></label>
-      <label>Type <select id="currency">
-        <option>chaos</option>
-        <option>divine</option>
-      </select></label>
+        <label>Мин <input type="number" id="min" value="1" min="1" max="999"></label>
+        <label>Макс <input type="number" id="max" value="20" min="1" max="999"></label>
+        <label>Валюта <select id="currency">
+            <option>Хаосы</option>
+            <option>Божественная сфера</option>
+        </select></label>
     </div>
 
     <hr>
-    <h3>Extra Filters</h3>
-    <label>Item Level <input type="number" id="ilvl" placeholder="optional" min="1" max="99"></label>
-    <label>Area Level <input type="number" id="area" placeholder="optional" min="1" max="99"></label>
-    <label>Map Tier <input type="number" id="tier" placeholder="optional" min="1" max="99"></label>
+    <h3>Дополнительные фильтры</h3>
+    <label>Уровень предмета <input type="number" id="ilvl" placeholder="Необязательно" min="1" max="99"></label>
+    <label>Уровень зоны <input type="number" id="area" placeholder="Необязательно" min="1" max="99"></label>
+    <label>Тир карты <input type="number" id="tier" placeholder="Необязательно" min="1" max="99"></label>
 
     <hr>
-    <label class="large">Additional <input type="text" id="additional" placeholder="optional"></label>
+    <label class="large">Дополнительно <input type="text" id="additional" placeholder="Необязательно"></label>
 
-    <button id="generate">Generate</button>
+    <button id="generate">Сгенерировать</button>
     <textarea id="output" rows="4" readonly></textarea>
-    <button id="copy">Copy</button>
-  </div>
+    <button id="copy">Копировать</button>
+</div>
 
-  <div id="toast">Copied!</div>
+<div id="toast">Скопировано!</div>
 
-  <script src="./scripts/to-regex-range.js"></script>
-  <script>
+<script src="./scripts/to-regex-range.js"></script>
+<script>
     const genBtn = document.getElementById('generate');
     const copyBtn = document.getElementById('copy');
     const toast = document.getElementById('toast');
 
     function populateFormFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      const s = params.get('s');
-      if (s) {
-        try {
-          const data = JSON.parse(atob(s));
-          if (data.m) document.getElementById('min').value = data.m;
-          if (data.M) document.getElementById('max').value = data.M;
-          if (data.c) document.getElementById('currency').value = data.c;
-          if (data.i) document.getElementById('ilvl').value = data.i;
-          if (data.a) document.getElementById('area').value = data.a;
-          if (data.t) document.getElementById('tier').value = data.t;
-          if (data.x) document.getElementById('additional').value = data.x;
-          genBtn.click(); // auto-generate output
-        } catch(e) { console.error('Failed to parse share data', e); }
-      }
+        const params = new URLSearchParams(window.location.search);
+        const s = params.get('s');
+        if (s) {
+            try {
+                const data = JSON.parse(atob(s));
+                if (data.m) document.getElementById('min').value = data.m;
+                if (data.M) document.getElementById('max').value = data.M;
+                if (data.c) document.getElementById('currency').value = data.c;
+                if (data.i) document.getElementById('ilvl').value = data.i;
+                if (data.a) document.getElementById('area').value = data.a;
+                if (data.t) document.getElementById('tier').value = data.t;
+                if (data.x) document.getElementById('additional').value = data.x;
+                genBtn.click(); // автоматическая генерация результата
+            } catch(e) { console.error('Не удалось разобрать данные', e); }
+        }
     }
 
     function updateUrlWithShareData(data) {
-      const base64 = btoa(JSON.stringify(data));
-      history.replaceState(null, '', `?s=${base64}`);
+        const base64 = btoa(JSON.stringify(data));
+        history.replaceState(null, '', `?s=${base64}`);
     }
 
     genBtn.onclick = () => {
-      const min = Math.max(1, Math.min(999, parseInt(document.getElementById('min').value) || 1));
-      const max = Math.max(min, Math.min(999, parseInt(document.getElementById('max').value) || 20));
-      const currency = document.getElementById('currency').value.toLowerCase();
-      const ilvl = parseInt(document.getElementById('ilvl').value);
-      const area = parseInt(document.getElementById('area').value);
-      const tier = parseInt(document.getElementById('tier').value);
-      const add = document.getElementById('additional').value.trim();
+        const min = Math.max(1, Math.min(999, parseInt(document.getElementById('min').value) || 1));
+        const max = Math.max(min, Math.min(999, parseInt(document.getElementById('max').value) || 20));
+        const currency = document.getElementById('currency').value.toLowerCase();
+        const ilvl = parseInt(document.getElementById('ilvl').value);
+        const area = parseInt(document.getElementById('area').value);
+        const tier = parseInt(document.getElementById('tier').value);
+        const add = document.getElementById('additional').value.trim();
 
-      const rangeRegex = toRegexRange(min, max, { shorthand: true, capture: true });
-      let parts = [];
-      parts.push(`"~b/o ${rangeRegex} ${currency}"`);
-      if (!isNaN(ilvl)) parts.push(`"ilvl: ${ilvl}"`);
-      if (!isNaN(area)) parts.push(`"area level: ${area}"`);
-      if (!isNaN(tier)) parts.push(`"tier: ${tier}"`);
-      if (add) parts.push(add);
+        const rangeRegex = toRegexRange(min, max, { shorthand: true, capture: true });
+        let parts = [];
+        parts.push(`"~b/o ${rangeRegex} ${currency}"`);
+        if (!isNaN(ilvl)) parts.push(`"ilvl: ${ilvl}"`);
+        if (!isNaN(area)) parts.push(`"area level: ${area}"`);
+        if (!isNaN(tier)) parts.push(`"tier: ${tier}"`);
+        if (add) parts.push(add);
 
-      document.getElementById('output').value = parts.join(' ');
+        document.getElementById('output').value = parts.join(' ');
 
-      const shareData = { m: min, M: max, c: currency };
-      if (!isNaN(ilvl)) shareData.i = ilvl;
-      if (!isNaN(area)) shareData.a = area;
-      if (!isNaN(tier)) shareData.t = tier;
-      if (add) shareData.x = add;
-      updateUrlWithShareData(shareData);
+        const shareData = { m: min, M: max, c: currency };
+        if (!isNaN(ilvl)) shareData.i = ilvl;
+        if (!isNaN(area)) shareData.a = area;
+        if (!isNaN(tier)) shareData.t = tier;
+        if (add) shareData.x = add;
+        updateUrlWithShareData(shareData);
     };
 
     copyBtn.onclick = () => {
-      const out = document.getElementById('output');
-      out.select();
-      document.execCommand('copy');
+        const out = document.getElementById('output');
+        out.select();
+        document.execCommand('copy');
 
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 1500);
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 1500);
     };
 
     populateFormFromUrl();
-  </script>
+</script>
 </body>
 </html>
